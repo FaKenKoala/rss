@@ -50,4 +50,9 @@ app.*.map.json
 node_modules/
 commitlint.config.js
 package-lock.json
+package.json# 规范化提交不要放到版本控制里面
+.husky/
+node_modules/
+commitlint.config.js
+package-lock.json
 package.json

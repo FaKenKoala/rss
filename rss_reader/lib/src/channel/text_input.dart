@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'text_input.freezed.dart';
+part 'text_input.g.dart';
 
 @freezed
 class TextInput with _$TextInput {
