@@ -56,3 +56,5 @@ node_modules/
 commitlint.config.js
 package-lock.json
 package.json
+
+**/*.freezed.dart
