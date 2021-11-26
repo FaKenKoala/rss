@@ -12,6 +12,9 @@ class AudioPlayNotifier extends ChangeNotifier {
       notifyListeners();
       print('状态: 正在播放=${state.playing}, 处理状态=${state.processingState}');
     });
+    _audioPlayer.positionStream.listen((event) {
+      notifyListeners();
+    });
   }
   final AudioPlayer _audioPlayer;
   String? _audioUrl;
@@ -27,6 +30,9 @@ class AudioPlayNotifier extends ChangeNotifier {
     }
     return tuple2(null, false);
   }
+
+  Tuple2<int?, int?> get duration =>
+      tuple2(_audioPlayer.position.inSeconds, _audioPlayer.duration?.inSeconds);
 
   play(String audioUrl, String guid) async {
     String? oldGuid = _guid;
@@ -44,7 +50,7 @@ class AudioPlayNotifier extends ChangeNotifier {
       }
     } else {
       if (oldGuid != guid) {
-         _audioPlayer.setUrl(audioUrl);
+        _audioPlayer.setUrl(audioUrl);
       }
       await _audioPlayer.play();
     }
