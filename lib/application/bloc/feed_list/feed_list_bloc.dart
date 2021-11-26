@@ -1,5 +1,3 @@
-import 'package:audioplayers/audioplayers.dart';
-import 'package:audioplayers/web/audioplayers_web.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,14 +18,3 @@ class FeedListBloc extends Bloc<FeedListEvent, FeedListState> {
   }
 }
 
-class AudioPlayNotifier extends ChangeNotifier {
-  AudioPlayNotifier() : _audioPlayer = AudioPlayer();
-  final AudioPlayer _audioPlayer;
-
-  
-  @override
-  void dispose() {
-    super.dispose();
-    _audioPlayer.dispose();
-  }
-}

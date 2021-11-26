@@ -1,13 +1,10 @@
-import 'dart:math';
-
-import 'package:audioplayers/audioplayers.dart';
-import 'package:audioplayers/web/audioplayers_web.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fpdart/fpdart.dart' hide State;
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:rss/application/audio_play/audio_play.dart';
 import 'package:rss/application/bloc/feed_list/feed_list_bloc.dart';
 import 'package:webfeed/domain/rss_enclosure.dart';
 import 'package:webfeed/webfeed.dart';
@@ -58,7 +55,7 @@ class _HomePageState extends State<HomePage> {
                             child: Card(
                                 color: Colors.brown,
                                 child: ListTile(
-                                    contentPadding: EdgeInsets.all(16.0),
+                                    contentPadding: const EdgeInsets.all(16.0),
                                     title: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -126,14 +123,42 @@ class PlayAudioWiget extends StatefulWidget {
 class _PlayAudioWigetState extends State<PlayAudioWiget> {
   @override
   Widget build(BuildContext context) {
+    final audioPlayNotifier = context.watch<AudioPlayNotifier>();
+    final Tuple2<String?, bool> playInfo = audioPlayNotifier.playInfo;
     return IconButton(
-        onPressed: () {},
+        onPressed: () {
+          audioPlayNotifier.play(widget.audio.url ?? '', widget.guid);
+        },
         iconSize: 40,
-        icon: Icon(
-          false
-              ? Icons.play_circle_fill_outlined
-              : Icons.pause_circle_filled_outlined,
-          color: Colors.white,
-        ));
+        icon: playInfo.first == widget.guid && !playInfo.second
+            ? const SizedBox.square(
+                dimension: 30,
+                child: CircularProgressIndicator(
+                  color: Colors.white,
+                ))
+            : Icon(
+                playInfo.first == widget.guid
+                    ? Icons.pause_circle_filled_outlined
+                    : Icons.play_circle_fill_outlined,
+                color: Colors.white,
+              ));
+  }
+}
+
+class TestWidget extends StatefulWidget {
+  const TestWidget({ Key? key }) : super(key: key);
+
+  @override
+  _TestWidgetState createState() => _TestWidgetState();
+}
+
+class _TestWidgetState extends State<TestWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: ((){
+        
+      })(),
+    );
   }
 }
