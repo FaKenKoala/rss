@@ -22,6 +22,8 @@ dependencies:
   audioplayers: ^0.20.1
   provider: ^6.0.1
   just_audio: ^0.9.18
+  flutter_html: ^2.1.5
+  time: ^2.0.1
 
 dev_dependencies:
   flutter_test:

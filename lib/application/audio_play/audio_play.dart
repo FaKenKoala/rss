@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:time/time.dart';
 
 class AudioPlayNotifier extends ChangeNotifier {
   AudioPlayNotifier() : _audioPlayer = AudioPlayer() {
@@ -20,6 +21,20 @@ class AudioPlayNotifier extends ChangeNotifier {
   String? _audioUrl;
   String? _guid;
 
+  String? get audioUrl => _audioUrl;
+  String? get guid => _guid;
+
+  double get volume => _audioPlayer.volume;
+  void changeVolumn(double volumn) {
+    print('声音: $volume');
+    _audioPlayer.setVolume(volumn);
+  }
+
+  void toggleVolume() {
+    double newVolume = volume == 0 ? 0.5 : 0;
+    changeVolumn(newVolume);
+  }
+
   /// 正在播放：1. 加载中 2. 加载完毕，播放中
   Tuple2<String?, bool> get playInfo {
     if (_audioPlayer.playerState.playing) {
@@ -33,6 +48,20 @@ class AudioPlayNotifier extends ChangeNotifier {
 
   Tuple2<int?, int?> get duration =>
       tuple2(_audioPlayer.position.inSeconds, _audioPlayer.duration?.inSeconds);
+
+  replay10Second() {
+    _setDuration(-10);
+  }
+
+  forward10Seconds() {
+    _setDuration(10);
+  }
+
+  _setDuration(int plusValue) {
+    final currentSeconds = (_audioPlayer.position.inSeconds + plusValue)
+        .clamp(0, _audioPlayer.duration?.inSeconds ?? 0);
+    _audioPlayer.seek(currentSeconds.seconds);
+  }
 
   play(String audioUrl, String guid) async {
     String? oldGuid = _guid;
