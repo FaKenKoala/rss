@@ -139,7 +139,6 @@ class RssListPage extends StatelessWidget {
                                         icon: notifier.volume == 0
                                             ? const Icon(Icons.volume_off)
                                             : const Icon(Icons.volume_up),
-                                        
                                       ),
                                       SliderTheme(
                                         data: SliderThemeData(
@@ -159,7 +158,7 @@ class RssListPage extends StatelessWidget {
                                             label:
                                                 '${(notifier.volume * 100).toInt()}',
                                             onChanged: (volumn) {
-                                              notifier.changeVolumn(volumn);
+                                              notifier.setVolume(volumn);
                                             }),
                                       ),
                                       IconButton(
@@ -214,6 +213,63 @@ class RssListPage extends StatelessWidget {
                                                       dimension: 30,
                                                       child: CircularProgressIndicator(color: Colors.white))))
                                               .getOrElse(() => const Icon(Icons.play_circle_fill_outlined, color: Colors.white))),
+                                      const SizedBox(width: 16),
+                                      PopupMenuButton(
+                                          child: Container(
+                                            padding: const EdgeInsets.all(6.0),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: Colors.white,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(2),
+                                            ),
+                                            child: Text(
+                                                '${notifier.speed.toStringAsFixed(2)}x',
+                                                style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 14)),
+                                          ),
+                                          itemBuilder: (context) {
+                                            Iterable<double> speedList() sync* {
+                                              double speed = 0;
+                                              while (true) {
+                                                yield speed += 0.25;
+                                              }
+                                            }
+
+                                            return speedList()
+                                                .take(8)
+                                                .map((e) =>
+                                                    PopupMenuItem<double>(
+                                                        onTap: () {
+                                                          notifier.setSpeed(e);
+                                                        },
+                                                        child: Row(
+                                                          children: [
+                                                            Opacity(
+                                                                opacity:
+                                                                    notifier.speed ==
+                                                                            e
+                                                                        ? 1
+                                                                        : 0,
+                                                                child:
+                                                                    const Padding(
+                                                                  padding: EdgeInsets
+                                                                      .only(
+                                                                          right:
+                                                                              8.0),
+                                                                  child: Icon(
+                                                                    Icons
+                                                                        .check_sharp,
+                                                                  ),
+                                                                )),
+                                                            Text('$e'),
+                                                          ],
+                                                        ),
+                                                        value: e))
+                                                .toList();
+                                          }),
                                       const SizedBox(
                                         width: 16,
                                       )
@@ -221,8 +277,8 @@ class RssListPage extends StatelessWidget {
                                   ),
                                 ),
                                 LinearProgressIndicator(
-                                    backgroundColor: Colors.green[500],
-                                    color: Colors.green[900],
+                                    backgroundColor: Colors.brown[300],
+                                    color: Colors.white,
                                     minHeight: 10,
                                     value: (duration.second ?? 0) == 0
                                         ? 0

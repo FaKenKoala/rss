@@ -25,14 +25,19 @@ class AudioPlayNotifier extends ChangeNotifier {
   String? get guid => _guid;
 
   double get volume => _audioPlayer.volume;
-  void changeVolumn(double volumn) {
+  void setVolume(double volume) {
     print('声音: $volume');
-    _audioPlayer.setVolume(volumn);
+    _audioPlayer.setVolume(volume);
+  }
+
+  double get speed => _audioPlayer.speed;
+  void setSpeed(double speed) {
+    _audioPlayer.setSpeed(speed);
   }
 
   void toggleVolume() {
     double newVolume = volume == 0 ? 0.5 : 0;
-    changeVolumn(newVolume);
+    setVolume(newVolume);
   }
 
   /// 正在播放：1. 加载中 2. 加载完毕，播放中
