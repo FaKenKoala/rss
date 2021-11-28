@@ -1,8 +1,8 @@
 name: rss
-description: A new Flutter project.
+description: rss feed list
 publish_to: none
 
-version: 1.0.0+1
+version: 1.0.0+2
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -24,6 +24,7 @@ dependencies:
   just_audio: ^0.9.18
   flutter_html: ^2.1.5
   time: ^2.0.1
+  flutter_widgetkit: ^1.0.3
 
 dev_dependencies:
   flutter_test:
@@ -33,6 +34,12 @@ dev_dependencies:
   freezed: ^1.0.0
   json_serializable: ^6.0.1
   build_runner: ^2.1.5
+  flutter_launcher_icons: ^0.9.2
+
+flutter_icons:
+  image_path: "assets/icon/rss_feed_icon.png"
+  android: true
+  ios: true
 
 flutter:
   uses-material-design: true

@@ -58,3 +58,4 @@ package-lock.json
 package.json
 
 **/*.freezed.dart
+**/*.g.dart

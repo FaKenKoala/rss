@@ -24,9 +24,7 @@ class RssListPage extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AudioPlayNotifier()),
       ],
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Guardian'),
-        ),
+        backgroundColor: Colors.grey[300],
         body: BlocBuilder<FeedListBloc, FeedListState>(
           builder: (context, state) {
             return optionOf(state.whenOrNull(guardianRss: id))
@@ -41,7 +39,7 @@ class RssListPage extends StatelessWidget {
                         return Padding(
                             padding: const EdgeInsets.only(bottom: 8.0),
                             child: Card(
-                                color: Colors.brown,
+                                color: Colors.white,
                                 child: Column(
                                   children: [
                                     ListTile(
@@ -54,7 +52,7 @@ class RssListPage extends StatelessWidget {
                                             Text(
                                               item.title ?? '',
                                               style: const TextStyle(
-                                                color: Colors.white,
+                                                color: Colors.orange,
                                                 fontSize: 20,
                                               ),
                                             ),
@@ -64,11 +62,11 @@ class RssListPage extends StatelessWidget {
                                             Text(
                                               optionOf(item.pubDate)
                                                   .map(DateFormat(
-                                                          "yyyy-MM-dd HH:mm:ss")
+                                                          "yyyy-MM-dd HH:mm")
                                                       .format)
                                                   .getOrElse(() => ''),
                                               style: const TextStyle(
-                                                color: Colors.white,
+                                                color: Colors.orange,
                                                 fontSize: 16,
                                               ),
                                             ),
@@ -89,7 +87,7 @@ class RssListPage extends StatelessWidget {
                   ),
                   Card(
                     child: Container(
-                      color: Colors.brown[100],
+                      color: Colors.white,
                       height: 100,
                       child: Row(
                         children: [
@@ -134,7 +132,7 @@ class RssListPage extends StatelessWidget {
                                         onPressed: () {
                                           notifier.toggleVolume();
                                         },
-                                        color: Colors.white,
+                                        color: Colors.orange,
                                         iconSize: 40,
                                         icon: notifier.volume == 0
                                             ? const Icon(Icons.volume_off)
@@ -142,15 +140,18 @@ class RssListPage extends StatelessWidget {
                                       ),
                                       SliderTheme(
                                         data: SliderThemeData(
-                                          activeTrackColor: Colors.white,
-                                          inactiveTrackColor: Colors.brown[300],
-                                          thumbColor: Colors.white,
+                                          activeTrackColor: Colors.orange,
+                                          inactiveTrackColor:
+                                              Colors.orange[200],
+                                          thumbColor: Colors.orange,
                                           valueIndicatorColor:
-                                              Colors.brown[300],
+                                              Colors.orange[200],
                                           valueIndicatorTextStyle: TextStyle(
-                                            backgroundColor: Colors.brown[300],
-                                            color: Colors.white,
+                                            backgroundColor: Colors.orange[200],
+                                            color: Colors.orange,
                                           ),
+                                          showValueIndicator:
+                                              ShowValueIndicator.always,
                                         ),
                                         child: Slider(
                                             value: notifier.volume,
@@ -168,7 +169,7 @@ class RssListPage extends StatelessWidget {
                                           iconSize: 40,
                                           icon: const Icon(
                                             Icons.replay_10,
-                                            color: Colors.white,
+                                            color: Colors.orange,
                                           )),
                                       const SizedBox(
                                         width: 16,
@@ -180,7 +181,7 @@ class RssListPage extends StatelessWidget {
                                           iconSize: 40,
                                           icon: const Icon(
                                             Icons.forward_10,
-                                            color: Colors.white,
+                                            color: Colors.orange,
                                           )),
                                       SizedBox(
                                         width: 150,
@@ -191,7 +192,7 @@ class RssListPage extends StatelessWidget {
                                             child: Text(
                                                 '${TimeUtils.intTime(duration.first)} / ${TimeUtils.intTime(duration.second)}',
                                                 style: const TextStyle(
-                                                  color: Colors.white,
+                                                  color: Colors.orange,
                                                 )),
                                           ),
                                         ),
@@ -208,18 +209,18 @@ class RssListPage extends StatelessWidget {
                                                       _, (__) => playInfo.second)
                                                   .map<Widget>((t) =>
                                                       const Icon(Icons.pause_circle_filled_outlined,
-                                                          color: Colors.white))
+                                                          color: Colors.orange))
                                                   .getOrElse(() => const SizedBox.square(
                                                       dimension: 30,
-                                                      child: CircularProgressIndicator(color: Colors.white))))
-                                              .getOrElse(() => const Icon(Icons.play_circle_fill_outlined, color: Colors.white))),
+                                                      child: CircularProgressIndicator(color: Colors.orange))))
+                                              .getOrElse(() => const Icon(Icons.play_circle_fill_outlined, color: Colors.orange))),
                                       const SizedBox(width: 16),
                                       PopupMenuButton(
                                           child: Container(
                                             padding: const EdgeInsets.all(6.0),
                                             decoration: BoxDecoration(
                                               border: Border.all(
-                                                color: Colors.white,
+                                                color: Colors.orange,
                                               ),
                                               borderRadius:
                                                   BorderRadius.circular(2),
@@ -227,7 +228,7 @@ class RssListPage extends StatelessWidget {
                                             child: Text(
                                                 '${notifier.speed.toStringAsFixed(2)}x',
                                                 style: const TextStyle(
-                                                    color: Colors.white,
+                                                    color: Colors.orange,
                                                     fontSize: 14)),
                                           ),
                                           itemBuilder: (context) {
@@ -277,8 +278,8 @@ class RssListPage extends StatelessWidget {
                                   ),
                                 ),
                                 LinearProgressIndicator(
-                                    backgroundColor: Colors.brown[300],
-                                    color: Colors.white,
+                                    backgroundColor: Colors.orange[300],
+                                    color: Colors.orange,
                                     minHeight: 10,
                                     value: (duration.second ?? 0) == 0
                                         ? 0
@@ -305,7 +306,11 @@ class EmptyContentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      child: Center(
+        child: Icon(Icons.rss_feed, color: Colors.orange),
+      ),
+    );
   }
 }
 
@@ -329,13 +334,13 @@ class PlayAudioWiget extends StatelessWidget {
                 ? const SizedBox.square(
                     dimension: 30,
                     child: CircularProgressIndicator(
-                      color: Colors.white,
+                      color: Colors.orange,
                     ))
                 : Icon(
                     playInfo.first == guid
                         ? Icons.pause_circle_filled_outlined
                         : Icons.play_circle_fill_outlined,
-                    color: Colors.white,
+                    color: Colors.orange,
                   )))
         .getOrElse(() => const SizedBox());
   }
